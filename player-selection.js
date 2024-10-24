@@ -1,38 +1,52 @@
-const playerSelectionContainer = document.getElementById('playerSelectionContainer');
-const lockInPlayersButton = document.getElementById('lockInPlayers');
-const thankYouMessage = document.getElementById('thankYouMessage');
+document.addEventListener("DOMContentLoaded", function () {
+    const username = localStorage.getItem("username");
+    const selections = JSON.parse(localStorage.getItem("selections")) || {};
+    
+    // Display previously selected players if they exist
+    if (selections[username]) {
+        document.getElementById("message").innerText = "Thank you for picking! You can come transfer in a week.";
+        document.getElementById("playerSelectionForm").style.display = "none"; // Hide the selection form
+        const selectedPlayers = selections[username];
+        const selectedPlayersList = document.getElementById("selectedPlayers");
+        selectedPlayers.forEach(player => {
+            const li = document.createElement("li");
+            li.textContent = player;
+            selectedPlayersList.appendChild(li);
+        });
+    } else {
+        // Fetch players from data.json and display them
+        fetch("data.json")
+            .then(response => response.json())
+            .then(data => {
+                const players = data.players;
+                const playerSelectionArea = document.getElementById("playerSelection");
+                players.forEach(player => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `
+                        <input type="checkbox" id="${player.name}" value="${player.name}">
+                        <label for="${player.name}">${player.name}</label>
+                    `;
+                    playerSelectionArea.appendChild(div);
+                });
+            });
+    }
 
-// List of available players
-const players = [
-    { name: 'Player 1', points: 10 },
-    { name: 'Player 2', points: 15 },
-    { name: 'Player 3', points: 20 },
-    { name: 'Player 4', points: 25 },
-    { name: 'Player 5', points: 30 },
-];
+    document.getElementById("lockInButton").addEventListener("click", function () {
+        const selected = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
 
-// Check for existing username
-const username = localStorage.getItem('username');
-
-if (username) {
-    // Create checkboxes for player selection
-    players.forEach((player, index) => {
-        const playerDiv = document.createElement('div');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `player${index}`;
-        checkbox.value = player.name;
-        playerDiv.appendChild(checkbox);
-        const label = document.createElement('label');
-        label.htmlFor = `player${index}`;
-        label.appendChild(document.createTextNode(player.name));
-        playerDiv.appendChild(label);
-        playerSelectionContainer.appendChild(playerDiv);
+        if (selected.length === 3) {
+            selections[username] = selected; // Store selections
+            localStorage.setItem("selections", JSON.stringify(selections)); // Update localStorage
+            document.getElementById("message").innerText = "Thank you for picking! You can come transfer in a week.";
+            document.getElementById("playerSelectionForm").style.display = "none"; // Hide the selection form
+            const selectedPlayersList = document.getElementById("selectedPlayers");
+            selected.forEach(player => {
+                const li = document.createElement("li");
+                li.textContent = player;
+                selectedPlayersList.appendChild(li);
+            });
+        } else {
+            alert("You must select exactly 3 players.");
+        }
     });
-
-    // Load selected players from localStorage
-    const selectedPlayers = JSON.parse(localStorage.getItem('selectedPlayers')) || [];
-
-    // Disable already selected players
-    if (selectedPlayers.length >= 3) {
-        lockInPlayersButton.style.display =
+});
