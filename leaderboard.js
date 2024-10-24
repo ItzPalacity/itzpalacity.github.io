@@ -1,15 +1,22 @@
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            const leaderboardTable = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
-            data.players.forEach(player => {
-                const row = leaderboardTable.insertRow();
-                const cell1 = row.insertCell(0);
-                const cell2 = row.insertCell(1);
-                cell1.textContent = player.name;
-                cell2.textContent = player.points;
-            });
-        })
-        .catch(error => console.error('Error fetching leaderboard data:', error));
-});
+const leaderboardTableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+
+// Function to fetch leaderboard data
+async function fetchLeaderboard() {
+    const response = await fetch('data.json');
+    const data = await response.json();
+    return data.leaderboard;
+}
+
+// Function to populate the leaderboard table
+async function populateLeaderboard() {
+    const players = await fetchLeaderboard();
+    players.forEach(player => {
+        const row = leaderboardTableBody.insertRow();
+        const playerCell = row.insertCell(0);
+        const pointsCell = row.insertCell(1);
+        playerCell.textContent = player.name;
+        pointsCell.textContent = player.points;
+    });
+}
+
+populateLeaderboard();
