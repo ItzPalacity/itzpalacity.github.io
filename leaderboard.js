@@ -1,32 +1,20 @@
-const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
+const leaderboardTable = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
 
-function loadLeaderboard() {
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            // Sort players by points
-            data.players.sort((a, b) => b.points - a.points);
-
-            // Clear the table body
-            leaderboardTableBody.innerHTML = '';
-
-            // Populate the table with player data
-            data.players.forEach(player => {
-                const row = document.createElement('tr');
-                const nameCell = document.createElement('td');
-                const pointsCell = document.createElement('td');
-
-                nameCell.textContent = player.name;
-                pointsCell.textContent = player.points;
-
-                row.appendChild(nameCell);
-                row.appendChild(pointsCell);
-                leaderboardTableBody.appendChild(row);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching leaderboard data:', error);
+async function fetchLeaderboard() {
+    try {
+        const response = await fetch('data.json');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        data.players.forEach(player => {
+            const row = leaderboardTable.insertRow();
+            row.insertCell(0).innerText = player.name;
+            row.insertCell(1).innerText = player.points;
         });
+    } catch (error) {
+        console.error('Error fetching leaderboard data:', error);
+    }
 }
 
-loadLeaderboard();
+fetchLeaderboard();
