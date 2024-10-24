@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     const registerButton = document.getElementById("registerButton");
-    const cancelButton = document.getElementById("cancelButton");
 
     // Register button click event
     registerButton.addEventListener("click", function () {
-        const usernameInput = document.getElementById("usernameInput").value;
-        const passwordInput = document.getElementById("passwordInput").value;
+        const usernameInput = document.getElementById("usernameInput").value.trim();
+        const passwordInput = document.getElementById("passwordInput").value.trim();
 
         if (usernameInput && passwordInput) {
             const users = JSON.parse(localStorage.getItem("users")) || [];
@@ -23,10 +22,5 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             alert("Please enter a username and password.");
         }
-    });
-
-    // Cancel button click event
-    cancelButton.addEventListener("click", function () {
-        window.location.href = "index.html"; // Redirect back to the registration page
     });
 });
