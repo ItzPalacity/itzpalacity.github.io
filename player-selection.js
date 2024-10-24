@@ -1,43 +1,52 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const playerSelectionArea = document.getElementById('player-selection-area');
-    const lockPlayersButton = document.getElementById('lock-players');
-    let selectedPlayers = [];
+let selectedPlayers = [];
 
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            data.players.forEach(player => {
-                const playerDiv = document.createElement('div');
-                const playerCheckbox = document.createElement('input');
-                playerCheckbox.type = 'checkbox';
-                playerCheckbox.value = player.name;
-                playerCheckbox.id = player.name;
+async function fetchPlayerData() {
+    try {
+        const response = await fetch('data.json');
+        const data = await response.json();
+        const playerList = document.getElementById('player-list');
 
-                const playerLabel = document.createElement('label');
-                playerLabel.htmlFor = player.name;
-                playerLabel.textContent = player.name;
-
-                playerDiv.appendChild(playerCheckbox);
-                playerDiv.appendChild(playerLabel);
-                playerSelectionArea.appendChild(playerDiv);
-            });
-        })
-        .catch(error => console.error('Error fetching player data:', error));
-
-    lockPlayersButton.addEventListener('click', () => {
-        const checkboxes = playerSelectionArea.querySelectorAll('input[type="checkbox"]:checked');
-        if (checkboxes.length !== 3) {
-            alert('Please select exactly 3 players.');
-            return;
-        }
-        
-        selectedPlayers = Array.from(checkboxes).map(checkbox => checkbox.value);
-        alert('Players locked: ' + selectedPlayers.join(', '));
-
-        // Disable checkboxes after selection
-        checkboxes.forEach(checkbox => {
-            checkbox.disabled = true;
+        data.players.forEach(player => {
+            const li = document.createElement('li');
+            li.textContent = player.name;
+            li.dataset.name = player.name;
+            li.dataset.points = player.points;
+            li.addEventListener('click', () => selectPlayer(player));
+            playerList.appendChild(li);
         });
-        lockPlayersButton.disabled = true; // Disable the lock button
+    } catch (error) {
+        console.error('Error fetching player data:', error);
+    }
+}
+
+function selectPlayer(player) {
+    if (selectedPlayers.length < 3 && !selectedPlayers.includes(player.name)) {
+        selectedPlayers.push(player.name);
+        updateSelectedPlayers();
+    } else {
+        alert('You can only select 3 players, or this player is already selected.');
+    }
+}
+
+function updateSelectedPlayers() {
+    const selectedList = document.getElementById('selected-players');
+    selectedList.innerHTML = '';
+    selectedPlayers.forEach(player => {
+        const li = document.createElement('li');
+        li.textContent = player;
+        selectedList.appendChild(li);
     });
+}
+
+document.getElementById('lock-players').addEventListener('click', () => {
+    if (selectedPlayers.length === 3) {
+        alert('Players locked! You cannot change your selection for a week.');
+        document.getElementById('player-list').innerHTML = ''; // Clear the list after locking
+        selectedPlayers = [];
+        updateSelectedPlayers();
+    } else {
+        alert('Please select exactly 3 players before locking.');
+    }
 });
+
+document.addEventListener('DOMContentLoaded', fetchPlayerData);
