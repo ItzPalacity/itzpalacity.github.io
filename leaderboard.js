@@ -1,22 +1,32 @@
-const leaderboardTableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
 
-// Function to fetch leaderboard data
-async function fetchLeaderboard() {
-    const response = await fetch('data.json');
-    const data = await response.json();
-    return data.leaderboard;
+function loadLeaderboard() {
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            // Sort players by points
+            data.players.sort((a, b) => b.points - a.points);
+
+            // Clear the table body
+            leaderboardTableBody.innerHTML = '';
+
+            // Populate the table with player data
+            data.players.forEach(player => {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                const pointsCell = document.createElement('td');
+
+                nameCell.textContent = player.name;
+                pointsCell.textContent = player.points;
+
+                row.appendChild(nameCell);
+                row.appendChild(pointsCell);
+                leaderboardTableBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching leaderboard data:', error);
+        });
 }
 
-// Function to populate the leaderboard table
-async function populateLeaderboard() {
-    const players = await fetchLeaderboard();
-    players.forEach(player => {
-        const row = leaderboardTableBody.insertRow();
-        const playerCell = row.insertCell(0);
-        const pointsCell = row.insertCell(1);
-        playerCell.textContent = player.name;
-        pointsCell.textContent = player.points;
-    });
-}
-
-populateLeaderboard();
+loadLeaderboard();
