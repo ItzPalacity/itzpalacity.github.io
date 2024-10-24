@@ -9,6 +9,7 @@ let players = [
 
 let selectedPlayers = [];
 
+// Function to display available players
 function displayAvailablePlayers() {
     const availablePlayersDiv = document.getElementById('available-players');
     availablePlayersDiv.innerHTML = ''; // Clear previous entries
@@ -20,9 +21,10 @@ function displayAvailablePlayers() {
     });
 }
 
+// Function to lock in selected players
 function lockInPlayers() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-    
+
     if (checkboxes.length > 3) {
         alert('You can only select 3 players!');
         return;
@@ -36,7 +38,7 @@ function lockInPlayers() {
     });
 
     console.log('Locked in players:', selectedPlayers);
-    
+
     // Disable all checkboxes and the button
     checkboxes.forEach(checkbox => {
         checkbox.disabled = true;
