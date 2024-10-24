@@ -1,46 +1,51 @@
-const signUpButton = document.getElementById('sign-up-button');
-const modal = document.getElementById('sign-up-modal');
-const closeModalButton = document.getElementById('close-modal');
-const registerButton = document.getElementById('register-button');
-const usernameInput = document.getElementById('username-input');
-const usernameDisplay = document.getElementById('username-display');
-const registrationError = document.getElementById('registration-error');
+const signUpButton = document.getElementById('signUpButton');
+const registerModal = document.getElementById('registerModal');
+const closeModal = document.getElementsByClassName('close')[0];
+const registerButton = document.getElementById('registerButton');
+const usernameInput = document.getElementById('usernameInput');
+const usernameDisplay = document.getElementById('usernameDisplay');
+const logoutButton = document.getElementById('logoutButton');
 
-// Display the logged-in user's username if exists
-const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
-const currentUser = Object.keys(registeredUsers).find(user => registeredUsers[user]);
-if (currentUser) {
-    usernameDisplay.innerText = currentUser;
-}
-
+// Open modal on sign-up button click
 signUpButton.onclick = function() {
-    modal.style.display = 'block';
-}
+    registerModal.style.display = "block";
+};
 
-closeModalButton.onclick = function() {
-    modal.style.display = 'none';
-}
+// Close modal
+closeModal.onclick = function() {
+    registerModal.style.display = "none";
+};
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-
+// Register username
 registerButton.onclick = function() {
-    const username = usernameInput.value.trim();
+    const username = usernameInput.value;
     if (username) {
-        if (!registeredUsers[username]) {
-            registeredUsers[username] = { players: [] };
-            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-            usernameDisplay.innerText = username;
-            modal.style.display = 'none';
-            usernameInput.value = '';
-            window.location.href = 'player-selection.html'; // Redirect to player selection
-        } else {
-            registrationError.innerText = 'Username already exists!';
-        }
-    } else {
-        registrationError.innerText = 'Please enter a username.';
+        localStorage.setItem('username', username);
+        usernameDisplay.innerText = username;
+        usernameDisplay.style.display = 'block';
+        logoutButton.style.display = 'inline';
+        registerModal.style.display = "none";
+        signUpButton.style.display = "none"; // Hide sign-up button after registration
+        // Redirect to player selection after registration
+        window.location.href = 'player-selection.html';
     }
-}
+};
+
+// Logout functionality
+logoutButton.onclick = function() {
+    localStorage.removeItem('username');
+    usernameDisplay.innerText = '';
+    logoutButton.style.display = 'none';
+    signUpButton.style.display = "inline"; // Show sign-up button again
+    window.location.href = 'index.html'; // Redirect to homepage
+};
+
+// Load username on page load
+window.onload = function() {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+        usernameDisplay.innerText = storedUsername;
+        logoutButton.style.display = 'inline';
+        signUpButton.style.display = "none"; // Hide sign-up button if logged in
+    }
+};
