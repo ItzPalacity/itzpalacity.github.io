@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 usernameDisplay.textContent = `Logged in as: ${usernameInput}`;
                 signupButton.style.display = "none"; // Hide sign-up button after registering
                 registrationDiv.style.display = "none"; // Hide registration input
+                logoutButton.style.display = "inline"; // Show logout button
                 alert("Registration successful!"); // Confirmation
             } else {
                 alert("Username already exists. Please choose a different username.");
