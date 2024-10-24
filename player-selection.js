@@ -41,8 +41,15 @@ function lockInPlayers() {
 
     // Disable all checkboxes and the button
     checkboxes.forEach(checkbox => {
-        checkbox.disabled = true;
+        checkbox.disabled = true; // Disable selected checkboxes
     });
+
+    // Disable all unchecked checkboxes
+    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    allCheckboxes.forEach(checkbox => {
+        checkbox.disabled = true; // Disable all checkboxes
+    });
+
     document.getElementById('lock-in-players').disabled = true;
 
     // Display confirmation message
@@ -53,5 +60,3 @@ function lockInPlayers() {
 // Initialize the available players on page load
 displayAvailablePlayers();
 document.getElementById('lock-in-players').addEventListener('click', lockInPlayers);
-
-}
