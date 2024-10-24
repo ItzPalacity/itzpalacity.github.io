@@ -1,60 +1,44 @@
-const signUpButton = document.getElementById('signUpButton');
-const registerArea = document.getElementById('registerArea');
-const usernameInput = document.getElementById('usernameInput');
-const registerButton = document.getElementById('registerButton');
-const usernameDisplay = document.getElementById('usernameDisplay');
+document.addEventListener("DOMContentLoaded", function () {
+    const usernameDisplay = document.getElementById("usernameDisplay");
+    const registerButton = document.getElementById("registerButton");
+    const signupButton = document.getElementById("signupButton");
+    const registrationDiv = document.getElementById("registration");
+    const cancelButton = document.getElementById("cancelButton");
 
-let registeredUsers = [];
+    // Load username from local storage
+    const username = localStorage.getItem("username");
+    if (username) {
+        usernameDisplay.textContent = `Logged in as: ${username}`;
+        signupButton.style.display = "none"; // Hide sign up button after logging in
+    }
 
-// Load existing usernames from the database
-fetch('data.json')
-    .then(response => response.json())
-    .then(data => {
-        registeredUsers = data.users || [];
+    signupButton.addEventListener("click", function () {
+        registrationDiv.style.display = "block"; // Show registration input
     });
 
-signUpButton.addEventListener('click', () => {
-    registerArea.style.display = 'block';
-    usernameInput.style.display = 'inline';
-    registerButton.style.display = 'inline';
-    signUpButton.style.display = 'none';
-});
+    registerButton.addEventListener("click", function () {
+        const usernameInput = document.getElementById("usernameInput").value;
 
-registerButton.addEventListener('click', () => {
-    const username = usernameInput.value.trim();
-    if (username && !registeredUsers.includes(username)) {
-        registeredUsers.push(username);
-        localStorage.setItem('loggedInUser', username); // Save logged in user in local storage
-        updateUsernameDisplay(username);
-        updateUserDatabase();
-        location.reload(); // Refresh page to show buttons
-    } else {
-        alert('Invalid username or already taken.');
-    }
-});
+        if (usernameInput) {
+            const users = JSON.parse(localStorage.getItem("users")) || [];
 
-function updateUsernameDisplay(username) {
-    usernameDisplay.innerText = `Logged in as: ${username}`;
-}
-
-// Load the logged-in user on page load
-window.onload = () => {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (loggedInUser) {
-        updateUsernameDisplay(loggedInUser);
-        registerArea.style.display = 'none'; // Hide register area after logging in
-        signUpButton.style.display = 'none'; // Hide the sign up button
-    }
-};
-
-// Update data.json to save registered users
-function updateUserDatabase() {
-    const data = { users: registeredUsers };
-    fetch('data.json', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+            // Check if the username already exists
+            if (!users.includes(usernameInput)) {
+                users.push(usernameInput);
+                localStorage.setItem("users", JSON.stringify(users));
+                localStorage.setItem("username", usernameInput);
+                usernameDisplay.textContent = `Logged in as: ${usernameInput}`;
+                signupButton.style.display = "none"; // Hide sign up button after registering
+                registrationDiv.style.display = "none"; // Hide registration input
+            } else {
+                alert("Username already exists. Please choose a different username.");
+            }
+        } else {
+            alert("Please enter a username.");
+        }
     });
-}
+
+    cancelButton.addEventListener("click", function () {
+        registrationDiv.style.display = "none"; // Hide registration input when canceling
+    });
+});
