@@ -1,59 +1,50 @@
-// player-selection.js
+// Sample data to represent the available players (from data.json)
+let players = [
+    { id: 1, name: "Player 1", points: 10 },
+    { id: 2, name: "Player 2", points: 20 },
+    { id: 3, name: "Player 3", points: 30 },
+    { id: 4, name: "Player 4", points: 40 },
+    { id: 5, name: "Player 5", points: 50 }
+];
 
-const playerDataUrl = 'data.json';
+let selectedPlayers = [];
 
-async function fetchPlayerData() {
-    const response = await fetch(playerDataUrl);
-    return await response.json();
-}
+function displayAvailablePlayers() {
+    const availablePlayersDiv = document.getElementById('available-players');
+    availablePlayersDiv.innerHTML = ''; // Clear previous entries
 
-async function lockInPlayers(selectedPlayers) {
-    const response = await fetch(playerDataUrl);
-    const data = await response.json();
-
-    // Assuming you have a way to identify users; using 'user1' as a placeholder
-    const userId = 'user1'; 
-    data.userSelections[userId] = selectedPlayers;
-
-    // Update data.json with new selections
-    await fetch(playerDataUrl, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+    players.forEach(player => {
+        const playerDiv = document.createElement('div');
+        playerDiv.innerHTML = `<input type="checkbox" id="player-${player.id}" value="${player.id}"> ${player.name}`;
+        availablePlayersDiv.appendChild(playerDiv);
     });
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const data = await fetchPlayerData();
-    const playerList = document.getElementById('player-list');
-    const lockInButton = document.getElementById('lock-in-button');
-    const selectedPlayers = [];
+function lockInPlayers() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    if (checkboxes.length > 3) {
+        alert('You can only select 3 players!');
+        return;
+    } else if (checkboxes.length < 3) {
+        alert('Please select 3 players before locking in!');
+        return;
+    }
 
-    data.players.forEach(player => {
-        const playerItem = document.createElement('div');
-        playerItem.textContent = player.name;
-        playerItem.className = 'player-item';
-        
-        playerItem.onclick = () => {
-            if (selectedPlayers.length < 3 && !selectedPlayers.includes(player.name)) {
-                selectedPlayers.push(player.name);
-                playerItem.classList.add('selected');
-            }
-            if (selectedPlayers.length === 3) {
-                lockInButton.disabled = false; // Enable the button when 3 players are selected
-            }
-        };
-
-        playerList.appendChild(playerItem);
+    selectedPlayers = Array.from(checkboxes).map(checkbox => {
+        return players.find(player => player.id === parseInt(checkbox.value));
     });
 
-    lockInButton.onclick = () => {
-        if (selectedPlayers.length === 3) {
-            lockInPlayers(selectedPlayers);
-            alert('Players locked in!');
-            lockInButton.disabled = true; // Disable the button after locking in players
-        }
-    };
-});
+    // Here you would typically save this selection to a backend or local storage.
+    // For now, just logging it to the console.
+    console.log('Locked in players:', selectedPlayers);
+    document.getElementById('message').innerText = 'Players locked in successfully!';
+    document.getElementById('lock-in-players').disabled = true; // Disable button after selection
+
+    // Optionally, disable all checkboxes
+    checkboxes.forEach(checkbox => checkbox.disabled = true);
+}
+
+// Initialize the available players on page load
+displayAvailablePlayers();
+document.getElementById('lock-in-players').addEventListener('click', lockInPlayers);
+
