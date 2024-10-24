@@ -1,34 +1,7 @@
 {
     "players": [
-        {
-            "name": "Player 1",
-            "points": 100,
-            "selected": false
-        },
-        {
-            "name": "Player 2",
-            "points": 150,
-            "selected": false
-        },
-        {
-            "name": "Player 3",
-            "points": 200,
-            "selected": false
-        },
-        {
-            "name": "Player 4",
-            "points": 120,
-            "selected": false
-        },
-        {
-            "name": "Player 5",
-            "points": 90,
-            "selected": false
-        }
-    ],
-    "selections": {
-        "user1": [],
-        "user2": [],
-        "user3": []
-    }
+        {"name": "Player 1", "points": 100},
+        {"name": "Player 2", "points": 200},
+        {"name": "Player 3", "points": 150}
+    ]
 }
