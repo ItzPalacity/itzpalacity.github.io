@@ -1,47 +1,59 @@
-const playerOptionsDiv = document.getElementById('playerOptions');
-const playerSelectionForm = document.getElementById('playerSelectionForm');
-const message = document.getElementById('message');
+// player-selection.js
 
-async function fetchPlayers() {
-    try {
-        const response = await fetch('data.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+const playerDataUrl = 'data.json';
+
+async function fetchPlayerData() {
+    const response = await fetch(playerDataUrl);
+    return await response.json();
+}
+
+async function lockInPlayers(selectedPlayers) {
+    const response = await fetch(playerDataUrl);
+    const data = await response.json();
+
+    // Assuming you have a way to identify users; using 'user1' as a placeholder
+    const userId = 'user1'; 
+    data.userSelections[userId] = selectedPlayers;
+
+    // Update data.json with new selections
+    await fetch(playerDataUrl, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const data = await fetchPlayerData();
+    const playerList = document.getElementById('player-list');
+    const lockInButton = document.getElementById('lock-in-button');
+    const selectedPlayers = [];
+
+    data.players.forEach(player => {
+        const playerItem = document.createElement('div');
+        playerItem.textContent = player.name;
+        playerItem.className = 'player-item';
+        
+        playerItem.onclick = () => {
+            if (selectedPlayers.length < 3 && !selectedPlayers.includes(player.name)) {
+                selectedPlayers.push(player.name);
+                playerItem.classList.add('selected');
+            }
+            if (selectedPlayers.length === 3) {
+                lockInButton.disabled = false; // Enable the button when 3 players are selected
+            }
+        };
+
+        playerList.appendChild(playerItem);
+    });
+
+    lockInButton.onclick = () => {
+        if (selectedPlayers.length === 3) {
+            lockInPlayers(selectedPlayers);
+            alert('Players locked in!');
+            lockInButton.disabled = true; // Disable the button after locking in players
         }
-        const data = await response.json();
-        return data.players;
-    } catch (error) {
-        console.error('Error fetching player data:', error);
-    }
-}
-
-async function populatePlayerOptions() {
-    const players = await fetchPlayers();
-    if (players && players.length) {
-        players.forEach(player => {
-            const playerDiv = document.createElement('div');
-            playerDiv.className = 'player';
-            playerDiv.innerHTML = `
-                <input type="checkbox" id="${player.name}" value="${player.name}">
-                <label for="${player.name}">${player.name} (Points: ${player.points})</label>
-            `;
-            playerOptionsDiv.appendChild(playerDiv);
-        });
-    } else {
-        message.textContent = "No players available.";
-    }
-}
-
-playerSelectionForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const selectedPlayers = Array.from(playerOptionsDiv.querySelectorAll('input:checked'));
-    if (selectedPlayers.length !== 3) {
-        message.textContent = "Please select exactly 3 players.";
-        return;
-    }
-    const playerNames = selectedPlayers.map(player => player.value).join(', ');
-    message.textContent = `Players locked in for a week: ${playerNames}!`;
-    // Here you would typically save the selections
+    };
 });
-
-populatePlayerOptions();
