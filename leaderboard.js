@@ -1,32 +1,39 @@
-// leaderboard.js
+document.addEventListener('DOMContentLoaded', () => {
+    const leaderboardBody = document.getElementById('leaderboard-body');
 
-fetch('data.json')
-  .then(response => response.json())
-  .then(data => {
-    const leaderboard = data.leaderboard;
-    const leaderboardContainer = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+    // Fetch player data from JSON
+    fetch('data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const players = data.players;
 
-    // Clear existing leaderboard
-    leaderboardContainer.innerHTML = '';
+            // Sort players by points in descending order
+            players.sort((a, b) => b.points - a.points);
 
-    // Populate the leaderboard
-    leaderboard.forEach(player => {
-      const playerRow = document.createElement('tr');
-      
-      // Create player name cell
-      const playerCell = document.createElement('td');
-      playerCell.textContent = player.name;
-      playerRow.appendChild(playerCell);
-      
-      // Create points cell
-      const pointsCell = document.createElement('td');
-      pointsCell.textContent = player.points;
-      playerRow.appendChild(pointsCell);
-      
-      // Add the player row to the table body
-      leaderboardContainer.appendChild(playerRow);
-    });
-  })
-  .catch(error => console.error('Error loading data:', error));
+            // Clear existing rows
+            leaderboardBody.innerHTML = '';
+
+            // Populate the leaderboard table
+            players.forEach(player => {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                const pointsCell = document.createElement('td');
+
+                nameCell.textContent = player.name;
+                pointsCell.textContent = player.points;
+
+                row.appendChild(nameCell);
+                row.appendChild(pointsCell);
+                leaderboardBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error fetching leaderboard data:', error));
+});
+
 
 
