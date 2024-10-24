@@ -1,20 +1,26 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center; /* Center text */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
     display: flex; /* Use flexbox for layout */
     flex-direction: column; /* Stack elements vertically */
     align-items: center; /* Center align items horizontally */
-    height: 100vh; /* Full height of the viewport */
     justify-content: center; /* Center vertically */
+    height: 100vh; /* Full height of the viewport */
+    background-color: #f4f4f4; /* Light background for contrast */
 }
 
 header {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 0;
+    padding: 10px 20px; /* Added padding for better appearance */
     width: 100%; /* Full width for header */
+    text-align: center; /* Center text in header */
+}
+
+main {
+    text-align: center; /* Center text in main */
+    padding: 20px; /* Added padding for spacing */
 }
 
 #signupContainer {
@@ -39,8 +45,7 @@ header {
     margin-top: 20px;
 }
 
-#usernameInput,
-#passwordInput {
+input {
     margin-top: 10px;
     padding: 10px;
     font-size: 16px;
@@ -52,4 +57,9 @@ header {
 
 button {
     margin-top: 10px;
+}
+
+label {
+    display: block; /* Block display for labels to stack */
+    margin: 10px 0 5px 0; /* Spacing above and below labels */
 }
