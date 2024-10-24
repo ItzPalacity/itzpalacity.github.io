@@ -1,58 +1,77 @@
-// Sample data to represent the available players
-let players = [
-    { id: 1, name: "Player 1", points: 10 },
-    { id: 2, name: "Player 2", points: 20 },
-    { id: 3, name: "Player 3", points: 30 },
-    { id: 4, name: "Player 4", points: 40 },
-    { id: 5, name: "Player 5", points: 50 }
+const players = [
+    { name: "Player 1", points: 10 },
+    { name: "Player 2", points: 20 },
+    { name: "Player 3", points: 30 },
+    { name: "Player 4", points: 40 },
+    { name: "Player 5", points: 50 }
 ];
 
 let selectedPlayers = [];
+const registeredUser = localStorage.getItem('registeredUser');
 
-// Function to display available players
-function displayAvailablePlayers() {
-    const availablePlayersDiv = document.getElementById('available-players');
-    availablePlayersDiv.innerHTML = ''; // Clear previous entries
+document.addEventListener('DOMContentLoaded', function() {
+    if (registeredUser) {
+        loadAvailablePlayers();
+    } else {
+        document.getElementById('available-players').innerText = 'Please register to select players.';
+        document.getElementById('lock-in-players').disabled = true;
+    }
+});
 
+function loadAvailablePlayers() {
+    const playerList = document.getElementById('available-players');
     players.forEach(player => {
-        const playerDiv = document.createElement('div');
-        playerDiv.innerHTML = `<input type="checkbox" id="player-${player.id}" value="${player.id}"> ${player.name}`;
-        availablePlayersDiv.appendChild(playerDiv);
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = player.name;
+        checkbox.className = 'player-checkbox';
+        checkbox.onchange = handlePlayerSelection;
+        
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(player.name));
+        playerList.appendChild(label);
+        playerList.appendChild(document.createElement('br'));
     });
+
+    const savedSelection = JSON.parse(localStorage.getItem(`selectedPlayers_${registeredUser}`));
+    if (savedSelection) {
+        selectedPlayers = savedSelection;
+        disableSelectedPlayers();
+        document.getElementById('message').innerText = "Thank you for picking! You can come transfer in a week.";
+    }
 }
 
-// Function to lock in selected players
-function lockInPlayers() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-
-    if (checkboxes.length > 3) {
-        alert('You can only select 3 players!');
-        return;
-    } else if (checkboxes.length < 3) {
-        alert('Please select 3 players before locking in!');
+function handlePlayerSelection(event) {
+    const selectedCheckboxes = document.querySelectorAll('.player-checkbox:checked');
+    
+    if (selectedCheckboxes.length > 3) {
+        event.target.checked = false; // Uncheck the current checkbox
         return;
     }
 
-    selectedPlayers = Array.from(checkboxes).map(checkbox => {
-        return players.find(player => player.id === parseInt(checkbox.value));
-    });
-
-    console.log('Locked in players:', selectedPlayers);
-
-    // Disable all checkboxes
-    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-    allCheckboxes.forEach(checkbox => {
-        checkbox.disabled = true; // Disable all checkboxes
-    });
-
-    // Disable the lock-in button
-    document.getElementById('lock-in-players').disabled = true;
-
-    // Display confirmation message
-    const messageDiv = document.getElementById('message');
-    messageDiv.innerText = 'Thank you for picking! You can come transfer in a week.';
+    selectedPlayers = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
+    
+    if (selectedPlayers.length === 3) {
+        document.getElementById('lock-in-players').disabled = false;
+    } else {
+        document.getElementById('lock-in-players').disabled = true;
+    }
 }
 
-// Initialize the available players on page load
-displayAvailablePlayers();
-document.getElementById('lock-in-players').addEventListener('click', lockInPlayers);
+document.getElementById('lock-in-players').onclick = function() {
+    localStorage.setItem(`selectedPlayers_${registeredUser}`, JSON.stringify(selectedPlayers));
+    disableSelectedPlayers();
+    document.getElementById('message').innerText = "Thank you for picking! You can come transfer in a week.";
+    this.disabled = true;
+};
+
+function disableSelectedPlayers() {
+    const checkboxes = document.querySelectorAll('.player-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.disabled = true;
+        if (selectedPlayers.includes(checkbox.value)) {
+            checkbox.checked = true;
+        }
+    });
+}
