@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <script src="player-selection.js" defer></script>
     <title>Player Selection</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Player Selection</h1>
+        <h1>Player Selection Area</h1>
         <nav>
             <a href="index.html">Home</a>
             <a href="leaderboard.html">Leaderboard</a>
         </nav>
     </header>
     <main>
-        <h2>Select 3 Players</h2>
-        <form id="playerSelectionForm">
-            <div id="playerOptions"></div>
-            <button type="submit">Lock In Players</button>
-        </form>
+        <h2>Select Your Players</h2>
+        <div id="available-players"></div>
+        <button id="lock-in-players">Lock In Players</button>
         <p id="message"></p>
     </main>
+    <script src="data.json"></script>
+    <script src="player-selection.js"></script>
 </body>
 </html>
