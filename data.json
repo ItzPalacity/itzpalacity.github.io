@@ -1,8 +1,8 @@
 {
   "leaderboard": [
-    { "name": "Marc_Q", "points": 0 },
-    { "name": "Player 2", "points": 80 },
-    { "name": "Player 3", "points": 75 }
+    { "name": "Marc_Q", "points": 100 },
+    { "name": "Player 2", "points": 150 },
+    { "name": "Player 3", "points": 120 }
   ],
   "players": [
     "Marc_Q",
