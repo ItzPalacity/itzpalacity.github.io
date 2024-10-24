@@ -4,18 +4,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const signupButton = document.getElementById("signupButton");
     const registrationDiv = document.getElementById("registration");
     const cancelButton = document.getElementById("cancelButton");
+    const logoutButton = document.getElementById("logoutButton");
 
     // Load username from local storage
     const username = localStorage.getItem("username");
     if (username) {
         usernameDisplay.textContent = `Logged in as: ${username}`;
         signupButton.style.display = "none"; // Hide sign-up button after logging in
+        logoutButton.style.display = "inline"; // Show logout button
+    } else {
+        logoutButton.style.display = "none"; // Hide logout button if not logged in
     }
 
+    // Sign up button click event
     signupButton.addEventListener("click", function () {
         registrationDiv.style.display = "block"; // Show registration input
+        console.log("Sign-up button clicked"); // Debugging
     });
 
+    // Register button click event
     registerButton.addEventListener("click", function () {
         const usernameInput = document.getElementById("usernameInput").value;
         const passwordInput = document.getElementById("passwordInput").value;
@@ -31,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 usernameDisplay.textContent = `Logged in as: ${usernameInput}`;
                 signupButton.style.display = "none"; // Hide sign-up button after registering
                 registrationDiv.style.display = "none"; // Hide registration input
+                alert("Registration successful!"); // Confirmation
             } else {
                 alert("Username already exists. Please choose a different username.");
             }
@@ -39,7 +47,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Cancel button click event
     cancelButton.addEventListener("click", function () {
         registrationDiv.style.display = "none"; // Hide registration input when canceling
+    });
+
+    // Logout button click event
+    logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('username'); // Remove user from local storage
+        location.reload(); // Refresh page
     });
 });
