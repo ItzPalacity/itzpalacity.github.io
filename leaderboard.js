@@ -1,20 +1,34 @@
-const leaderboardTable = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+const usernameDisplay = document.getElementById('usernameDisplay');
+const logoutButton = document.getElementById('logoutButton');
 
-async function fetchLeaderboard() {
-    try {
-        const response = await fetch('data.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        data.players.forEach(player => {
-            const row = leaderboardTable.insertRow();
-            row.insertCell(0).innerText = player.name;
-            row.insertCell(1).innerText = player.points;
-        });
-    } catch (error) {
-        console.error('Error fetching leaderboard data:', error);
+// Load the logged-in user on page load
+window.onload = () => {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+        usernameDisplay.innerText = `Logged in as: ${loggedInUser}`;
+        logoutButton.style.display = 'inline'; // Show the logout button
+        loadLeaderboard(); // Load leaderboard data
+    } else {
+        alert('You need to be registered to view the leaderboard.');
+        window.location.href = 'index.html'; // Redirect to homepage
     }
-}
+};
 
-fetchLeaderboard();
+logoutButton.addEventListener('click', () => {
+    localStorage.removeItem('loggedInUser'); // Remove user from local storage
+    location.reload(); // Refresh page
+});
+
+function loadLeaderboard() {
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            const leaderboardBody = document.getElementById('leaderboardBody');
+            leaderboardBody.innerHTML = ''; // Clear existing leaderboard data
+            data.leaderboard.forEach(player => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${player.name}</td><td>${player.points}</td>`;
+                leaderboardBody.appendChild(row);
+            });
+        });
+}
