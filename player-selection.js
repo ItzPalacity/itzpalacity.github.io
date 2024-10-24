@@ -1,52 +1,38 @@
-let selectedPlayers = [];
+const playerOptionsDiv = document.getElementById('playerOptions');
+const playerSelectionForm = document.getElementById('playerSelectionForm');
+const message = document.getElementById('message');
 
-async function fetchPlayerData() {
-    try {
-        const response = await fetch('data.json');
-        const data = await response.json();
-        const playerList = document.getElementById('player-list');
-
-        data.players.forEach(player => {
-            const li = document.createElement('li');
-            li.textContent = player.name;
-            li.dataset.name = player.name;
-            li.dataset.points = player.points;
-            li.addEventListener('click', () => selectPlayer(player));
-            playerList.appendChild(li);
-        });
-    } catch (error) {
-        console.error('Error fetching player data:', error);
-    }
+// Function to fetch player data
+async function fetchPlayers() {
+    const response = await fetch('data.json');
+    const data = await response.json();
+    return data.players;
 }
 
-function selectPlayer(player) {
-    if (selectedPlayers.length < 3 && !selectedPlayers.includes(player.name)) {
-        selectedPlayers.push(player.name);
-        updateSelectedPlayers();
-    } else {
-        alert('You can only select 3 players, or this player is already selected.');
-    }
-}
-
-function updateSelectedPlayers() {
-    const selectedList = document.getElementById('selected-players');
-    selectedList.innerHTML = '';
-    selectedPlayers.forEach(player => {
-        const li = document.createElement('li');
-        li.textContent = player;
-        selectedList.appendChild(li);
+// Function to populate player selection options
+async function populatePlayerOptions() {
+    const players = await fetchPlayers();
+    players.forEach(player => {
+        const playerDiv = document.createElement('div');
+        playerDiv.className = 'player';
+        playerDiv.innerHTML = `
+            <input type="checkbox" id="${player.name}" value="${player.name}">
+            <label for="${player.name}">${player.name} (Points: ${player.points})</label>
+        `;
+        playerOptionsDiv.appendChild(playerDiv);
     });
 }
 
-document.getElementById('lock-players').addEventListener('click', () => {
-    if (selectedPlayers.length === 3) {
-        alert('Players locked! You cannot change your selection for a week.');
-        document.getElementById('player-list').innerHTML = ''; // Clear the list after locking
-        selectedPlayers = [];
-        updateSelectedPlayers();
-    } else {
-        alert('Please select exactly 3 players before locking.');
+playerSelectionForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const selectedPlayers = Array.from(playerOptionsDiv.querySelectorAll('input:checked'));
+    if (selectedPlayers.length !== 3) {
+        message.textContent = "Please select exactly 3 players.";
+        return;
     }
+    message.textContent = "Players locked in for a week!";
+    // Here you would typically save the selections
 });
 
-document.addEventListener('DOMContentLoaded', fetchPlayerData);
+// Initial call to populate player options
+populatePlayerOptions();
