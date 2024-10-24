@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
         usernameDisplay.textContent = `Logged in as: ${username}`;
         registrationContainer.style.display = "none"; // Hide registration input after logging in
         logoutButton.style.display = "inline"; // Show logout button
+        document.getElementById("leaderboard").style.display = "block"; // Show leaderboard
+        document.getElementById("playerSelection").style.display = "block"; // Show player selection
     } else {
         logoutButton.style.display = "none"; // Hide logout button if not logged in
     }
