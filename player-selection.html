@@ -8,16 +8,21 @@
 </head>
 <body>
     <header>
-        <h1>Player Selection</h1>
-        <div id="username-display"></div>
+        <h1>Fantasy Racing</h1>
+        <nav>
+            <a href="leaderboard.html" id="leaderboardLink">Leaderboard</a>
+            <a href="player-selection.html" id="playerSelectionLink">Player Selection</a>
+            <span id="usernameDisplay" style="float:right;"></span>
+            <button id="logoutButton" style="display:none; float:right;">Logout</button>
+        </nav>
     </header>
     <main>
         <h2>Select Your Players</h2>
-        <div id="player-list"></div>
-        <button id="lock-in-players">Lock in Players</button>
-        <p id="confirmation-message"></p>
-        <p id="error-message" class="error"></p>
+        <div id="playerSelectionContainer"></div>
+        <button id="lockInPlayers" style="display:none;">Lock In Players</button>
+        <p id="thankYouMessage" style="display:none;">Thank you for picking! You can come transfer in a week.</p>
     </main>
+    
     <script src="player-selection.js"></script>
 </body>
 </html>
