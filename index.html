@@ -4,35 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Fantasy Racing</title>
+    <title>Fantasy League Racing</title>
 </head>
 <body>
     <header>
-        <h1>Fantasy Racing</h1>
-        <nav>
-            <a href="leaderboard.html" id="leaderboardLink" style="display:none;">Leaderboard</a>
-            <a href="player-selection.html" id="playerSelectionLink" style="display:none;">Player Selection</a>
-            <span id="usernameDisplay" style="float:right;"></span>
-            <button id="logoutButton" style="display:none; float:right;">Logout</button>
-        </nav>
+        <h1>Fantasy League Racing</h1>
     </header>
     <main>
-        <div class="centered">
-            <h2>Welcome to Fantasy League Racing!</h2>
-            <p>Join us to create your own team of racers and compete for points based on their performance. Register now to get started!</p>
-            <button id="signUpButton">Sign Up</button>
+        <div class="welcome-text">
+            <p>Welcome to Fantasy League Racing! Create your team and compete with others!</p>
+            <p>Pick your favorite players, and see how they perform in races. You can lock in your team for a week and watch the points roll in!</p>
         </div>
+        <div class="register-container">
+            <input type="text" id="username" placeholder="Enter your username" />
+            <button id="register-btn">Register</button>
+        </div>
+        <div id="user-display"></div>
     </main>
-
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Register</h2>
-            <input type="text" id="usernameInput" placeholder="Enter your username">
-            <button id="registerButton">Register</button>
-        </div>
-    </div>
-
-    <script src="index.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
