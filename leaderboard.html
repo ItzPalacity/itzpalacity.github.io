@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Fantasy Racing</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional CSS for styling -->
 </head>
 <body>
     <header>
-        <h1>Fantasy Racing Leaderboard</h1>
+        <h1>Welcome to Fantasy Racing</h1>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="player-selection.html">Select Players</a>
+            <a href="leaderboard.html">Leaderboard</a>
+            <a href="player-selection.html">Player Selection</a>
         </nav>
     </header>
-    <main>
+    
+    <div id="leaderboard-container">
+        <h2>Points Leaderboard</h2> <!-- Title Added Here -->
         <table id="leaderboard">
             <thead>
                 <tr>
@@ -23,11 +25,12 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Player data will be inserted here by JavaScript -->
+                <!-- Player data will be populated here -->
             </tbody>
         </table>
-    </main>
-
+    </div>
+    
     <script src="leaderboard.js"></script>
 </body>
 </html>
+
