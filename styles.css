@@ -24,21 +24,20 @@ h1 {
 
 main {
     padding: 20px;
+    text-align: center;
 }
 
 .player-list {
-    margin: 20px 0;
-}
-
-.player-list div {
-    margin: 5px 0; /* Space between players */
-}
-
-button {
-    margin-top: 10px;
-}
-
-#message {
     margin-top: 20px;
-    color: green; /* Adjust color to your liking */
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color:
