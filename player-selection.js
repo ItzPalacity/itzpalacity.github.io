@@ -1,52 +1,47 @@
 document.addEventListener("DOMContentLoaded", function () {
     const username = localStorage.getItem("username");
-    const selections = JSON.parse(localStorage.getItem("selections")) || {};
-    
-    // Display previously selected players if they exist
-    if (selections[username]) {
-        document.getElementById("message").innerText = "Thank you for picking! You can come transfer in a week.";
-        document.getElementById("playerSelectionForm").style.display = "none"; // Hide the selection form
-        const selectedPlayers = selections[username];
-        const selectedPlayersList = document.getElementById("selectedPlayers");
-        selectedPlayers.forEach(player => {
-            const li = document.createElement("li");
-            li.textContent = player;
-            selectedPlayersList.appendChild(li);
-        });
+    const usernameDisplay = document.getElementById("usernameDisplay");
+    const lockInButton = document.getElementById("lockInButton");
+    const messageDiv = document.getElementById("message");
+    const playerForm = document.getElementById("playerForm");
+
+    // Update username display
+    if (username) {
+        usernameDisplay.textContent = `Logged in as: ${username}`;
     } else {
-        // Fetch players from data.json and display them
-        fetch("data.json")
-            .then(response => response.json())
-            .then(data => {
-                const players = data.players;
-                const playerSelectionArea = document.getElementById("playerSelection");
-                players.forEach(player => {
-                    const div = document.createElement("div");
-                    div.innerHTML = `
-                        <input type="checkbox" id="${player.name}" value="${player.name}">
-                        <label for="${player.name}">${player.name}</label>
-                    `;
-                    playerSelectionArea.appendChild(div);
-                });
-            });
+        alert("Please register first.");
+        window.location.href = "index.html"; // Redirect to registration page if not registered
     }
 
-    document.getElementById("lockInButton").addEventListener("click", function () {
-        const selected = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+    // Load players from data.json
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            const players = data.players;
+            const userSelections = data.users.find(user => user.username === username).selections;
 
-        if (selected.length === 3) {
-            selections[username] = selected; // Store selections
-            localStorage.setItem("selections", JSON.stringify(selections)); // Update localStorage
-            document.getElementById("message").innerText = "Thank you for picking! You can come transfer in a week.";
-            document.getElementById("playerSelectionForm").style.display = "none"; // Hide the selection form
-            const selectedPlayersList = document.getElementById("selectedPlayers");
-            selected.forEach(player => {
-                const li = document.createElement("li");
-                li.textContent = player;
-                selectedPlayersList.appendChild(li);
+            players.forEach(player => {
+                const playerLabel = document.createElement("label");
+                const playerCheckbox = document.createElement("input");
+                playerCheckbox.type = "checkbox";
+                playerCheckbox.value = player.name;
+                playerCheckbox.disabled = userSelections.length >= 3 || userSelections.includes(player.name);
+                playerCheckbox.checked = userSelections.includes(player.name);
+                playerLabel.appendChild(playerCheckbox);
+                playerLabel.appendChild(document.createTextNode(player.name));
+                playerForm.appendChild(playerLabel);
             });
-        } else {
-            alert("You must select exactly 3 players.");
-        }
-    });
-});
+        });
+
+    lockInButton.addEventListener("click", function () {
+        const selectedPlayers = Array.from(playerForm.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+
+        if (selectedPlayers.length === 3) {
+            const users = JSON.parse(localStorage.getItem("users"));
+            const userIndex = users.findIndex(user => user.username === username);
+            if (userIndex !== -1) {
+                users[userIndex].selections = selectedPlayers;
+                localStorage.setItem("users", JSON.stringify(users));
+                messageDiv.textContent = "Thank you for picking! You can come transfer in a week.";
+                messageDiv.style.display = "block";
+                playerForm.style.display = "none"; // Hide
