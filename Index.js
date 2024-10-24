@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const username = localStorage.getItem("username");
     if (username) {
         usernameDisplay.textContent = `Logged in as: ${username}`;
-        signupButton.style.display = "none"; // Hide sign up button after logging in
+        signupButton.style.display = "none"; // Hide sign-up button after logging in
     }
 
     signupButton.addEventListener("click", function () {
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 localStorage.setItem("users", JSON.stringify(users));
                 localStorage.setItem("username", usernameInput);
                 usernameDisplay.textContent = `Logged in as: ${usernameInput}`;
-                signupButton.style.display = "none"; // Hide sign up button after registering
+                signupButton.style.display = "none"; // Hide sign-up button after registering
                 registrationDiv.style.display = "none"; // Hide registration input
             } else {
                 alert("Username already exists. Please choose a different username.");
