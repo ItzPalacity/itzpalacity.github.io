@@ -18,11 +18,15 @@
     </header>
     <main>
         <h2>Select Your Players</h2>
-        <div id="playerSelectionContainer"></div>
-        <button id="lockInPlayers" style="display:none;">Lock In Players</button>
-        <p id="thankYouMessage" style="display:none;">Thank you for picking! You can come transfer in a week.</p>
+        <div id="playerSelectionContainer">
+            <form id="playerForm">
+                <!-- Players will be dynamically generated here -->
+            </form>
+            <button id="lockInButton">Lock In Players</button>
+            <div id="message" style="display:none;"></div>
+        </div>
     </main>
-    
+
     <script src="player-selection.js"></script>
 </body>
 </html>
