@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="leaderboard.js" defer></script>
     <title>Leaderboard</title>
 </head>
 <body>
     <header>
         <h1>Points Leaderboard</h1>
-        <div id="username-display"></div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="player-selection.html">Player Selection</a>
+        </nav>
     </header>
     <main>
-        <table id="leaderboard-table">
+        <table id="leaderboardTable">
             <thead>
                 <tr>
                     <th>Player</th>
@@ -20,10 +24,9 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Leaderboard data will be inserted here -->
+                <!-- Player data will be inserted here by JavaScript -->
             </tbody>
         </table>
     </main>
-    <script src="leaderboard.js"></script>
 </body>
 </html>
