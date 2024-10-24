@@ -18,13 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     registerButton.addEventListener("click", function () {
         const usernameInput = document.getElementById("usernameInput").value;
+        const passwordInput = document.getElementById("passwordInput").value;
 
-        if (usernameInput) {
+        if (usernameInput && passwordInput) {
             const users = JSON.parse(localStorage.getItem("users")) || [];
 
             // Check if the username already exists
-            if (!users.includes(usernameInput)) {
-                users.push(usernameInput);
+            if (!users.some(user => user.username === usernameInput)) {
+                users.push({ username: usernameInput, password: passwordInput, selections: [] });
                 localStorage.setItem("users", JSON.stringify(users));
                 localStorage.setItem("username", usernameInput);
                 usernameDisplay.textContent = `Logged in as: ${usernameInput}`;
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Username already exists. Please choose a different username.");
             }
         } else {
-            alert("Please enter a username.");
+            alert("Please enter a username and password.");
         }
     });
 
