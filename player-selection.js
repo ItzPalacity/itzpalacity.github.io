@@ -1,4 +1,4 @@
-// Sample data to represent the available players (from data.json)
+// Sample data to represent the available players
 let players = [
     { id: 1, name: "Player 1", points: 10 },
     { id: 2, name: "Player 2", points: 20 },
@@ -22,6 +22,7 @@ function displayAvailablePlayers() {
 
 function lockInPlayers() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    
     if (checkboxes.length > 3) {
         alert('You can only select 3 players!');
         return;
@@ -34,17 +35,19 @@ function lockInPlayers() {
         return players.find(player => player.id === parseInt(checkbox.value));
     });
 
-    // Here you would typically save this selection to a backend or local storage.
-    // For now, just logging it to the console.
     console.log('Locked in players:', selectedPlayers);
-    document.getElementById('message').innerText = 'Players locked in successfully!';
-    document.getElementById('lock-in-players').disabled = true; // Disable button after selection
+    
+    // Disable all checkboxes and the button
+    checkboxes.forEach(checkbox => {
+        checkbox.disabled = true;
+    });
+    document.getElementById('lock-in-players').disabled = true;
 
-    // Optionally, disable all checkboxes
-    checkboxes.forEach(checkbox => checkbox.disabled = true);
+    // Display confirmation message
+    const messageDiv = document.getElementById('message');
+    messageDiv.innerText = 'Thank you for picking! You can come transfer in a week.';
 }
 
 // Initialize the available players on page load
 displayAvailablePlayers();
 document.getElementById('lock-in-players').addEventListener('click', lockInPlayers);
-
