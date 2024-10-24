@@ -1,21 +1,20 @@
-// Sample data, in real life this could come from a server or JSON file
-const players = [
-    { name: "Racer 1", points: 120 },
-    { name: "Racer 2", points: 150 },
-    { name: "Racer 3", points: 100 },
-];
-
-// Insert data into the leaderboard
-const leaderboardBody = document.querySelector("#leaderboard tbody");
-
-players.forEach(player => {
-    const row = document.createElement("tr");
-    row.innerHTML = `<td>${player.name}</td><td>${player.points}</td>`;
-    leaderboardBody.appendChild(row);
+// leaderboard.js
 
 fetch('data.json')
   .then(response => response.json())
   .then(data => {
     const leaderboard = data.leaderboard;
-    // Code to update leaderboard UI goes here
-  });
+    const leaderboardContainer = document.getElementById('leaderboard');
+
+    // Clear existing leaderboard
+    leaderboardContainer.innerHTML = '';
+
+    // Populate the leaderboard
+    leaderboard.forEach(player => {
+      const playerElement = document.createElement('div');
+      playerElement.textContent = `${player.name}: ${player.points} points`;
+      leaderboardContainer.appendChild(playerElement);
+    });
+  })
+  .catch(error => console.error('Error loading data:', error));
+
