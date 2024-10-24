@@ -25,26 +25,8 @@ main {
     padding: 20px; /* Added padding for spacing */
 }
 
-#signupContainer {
-    margin: 20px auto; /* Center the signup button */
-}
-
-#signupButton {
-    padding: 15px 30px;
-    font-size: 18px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#signupButton:hover {
-    background-color: #45a049;
-}
-
-#registration {
-    margin-top: 20px;
+#registrationContainer {
+    margin: 20px auto; /* Center the registration container */
 }
 
 input {
@@ -59,9 +41,25 @@ input {
 
 button {
     margin-top: 10px;
+    padding: 15px 30px; /* Added padding for buttons */
+    font-size: 18px;
+    background-color: #4CAF50; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* No border for buttons */
+    border-radius: 5px; /* Rounded corners for buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker shade on hover */
 }
 
 label {
     display: block; /* Block display for labels to stack */
     margin: 10px 0 5px 0; /* Spacing above and below labels */
+}
+
+#leaderboard, #playerSelection {
+    display: none; /* Initially hide leaderboard and player selection */
+    margin-top: 20px; /* Spacing above these sections */
 }
