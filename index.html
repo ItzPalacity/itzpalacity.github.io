@@ -30,51 +30,13 @@
             <button id="registerButton">Register</button>
             <button id="cancelButton">Cancel</button>
         </div>
+
+        <div>
+            <h3>Leaderboard</h3>
+            <button onclick="window.location.href='leaderboard.html';">View Leaderboard</button>
+        </div>
     </main>
 
-    <script>
-        const signupButton = document.getElementById('signupButton');
-        const registrationDiv = document.getElementById('registration');
-        const usernameInput = document.getElementById('usernameInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const registerButton = document.getElementById('registerButton');
-        const cancelButton = document.getElementById('cancelButton');
-        const usernameDisplay = document.getElementById('usernameDisplay');
-        const logoutButton = document.getElementById('logoutButton');
-
-        // Show registration form when "Sign Up" button is clicked
-        signupButton.addEventListener('click', () => {
-            registrationDiv.style.display = 'block';
-            usernameInput.value = '';  // Clear the input fields
-            passwordInput.value = '';  // Clear the input fields
-        });
-
-        // Handle registration
-        registerButton.addEventListener('click', () => {
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value.trim();
-
-            if (username && password) {
-                usernameDisplay.textContent = `Logged in as: ${username}`;
-                signupButton.style.display = 'none';
-                logoutButton.style.display = 'block';
-                registrationDiv.style.display = 'none';  // Hide the registration form
-            } else {
-                alert('Please enter a valid username and password.');
-            }
-        });
-
-        // Handle cancel button
-        cancelButton.addEventListener('click', () => {
-            registrationDiv.style.display = 'none';  // Hide the registration form
-        });
-
-        // Handle logout
-        logoutButton.addEventListener('click', () => {
-            usernameDisplay.textContent = '';
-            signupButton.style.display = 'block';
-            logoutButton.style.display = 'none';
-        });
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
