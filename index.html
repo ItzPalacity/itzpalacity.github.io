@@ -8,21 +8,29 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to Fantasy Racing</h1>
-        <div id="username-display"></div>
+        <h1>Fantasy Racing</h1>
+        <nav>
+            <a href="leaderboard.html" id="leaderboardLink" style="display:none;">Leaderboard</a>
+            <a href="player-selection.html" id="playerSelectionLink" style="display:none;">Player Selection</a>
+            <span id="usernameDisplay" style="float:right;"></span>
+            <button id="logoutButton" style="display:none; float:right;">Logout</button>
+        </nav>
     </header>
     <main>
-        <button id="sign-up-button">Sign Up</button>
-        <div id="sign-up-modal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="close-modal">&times;</span>
-                <h2>Sign Up</h2>
-                <input type="text" id="username-input" placeholder="Enter your username">
-                <button id="register-button">Register</button>
-                <p id="registration-error" class="error"></p>
-            </div>
+        <div class="centered">
+            <button id="signUpButton">Sign Up</button>
         </div>
     </main>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <input type="text" id="usernameInput" placeholder="Enter your username">
+            <button id="registerButton">Register</button>
+        </div>
+    </div>
+
     <script src="index.js"></script>
 </body>
 </html>
