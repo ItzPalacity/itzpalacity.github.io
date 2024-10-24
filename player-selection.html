@@ -8,19 +8,15 @@
 </head>
 <body>
     <header>
-        <h1>Fantasy Sports Racing</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="leaderboard.html">Leaderboard</a>
-            <a href="player-selection.html">Player Selection</a>
-            <a href="my-players.html">My Players</a>
-        </nav>
+        <h1>Player Selection</h1>
+        <div id="username-display"></div>
     </header>
     <main>
         <h2>Select Your Players</h2>
-        <div id="available-players" class="player-list"></div>
+        <div id="player-list"></div>
         <button id="lock-in-players">Lock in Players</button>
-        <div id="message" style="margin-top: 20px; color: green;"></div>
+        <p id="confirmation-message"></p>
+        <p id="error-message" class="error"></p>
     </main>
     <script src="player-selection.js"></script>
 </body>
