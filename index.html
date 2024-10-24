@@ -4,28 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Fantasy Sports Racing</title>
+    <title>Fantasy Racing</title>
 </head>
 <body>
     <header>
-        <h1>Fantasy Sports Racing</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="leaderboard.html">Leaderboard</a>
-            <a href="player-selection.html">Player Selection</a>
-            <a href="my-players.html">My Players</a>
-        </nav>
+        <h1>Welcome to Fantasy Racing</h1>
+        <div id="username-display"></div>
     </header>
     <main>
-        <h2>Welcome to the Fantasy Sports Racing!</h2>
         <button id="sign-up-button">Sign Up</button>
         <div id="sign-up-modal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <span class="close" id="close-modal">&times;</span>
                 <h2>Sign Up</h2>
-                <input type="text" id="username" placeholder="Enter your username" />
+                <input type="text" id="username-input" placeholder="Enter your username">
                 <button id="register-button">Register</button>
-                <div id="registration-message"></div>
+                <p id="registration-error" class="error"></p>
             </div>
         </div>
     </main>
