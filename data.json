@@ -1,16 +1,26 @@
 {
-    "players": [
-        { "name": "Player 1", "points": 100 },
-        { "name": "Player 2", "points": 150 },
-        { "name": "Player 3", "points": 200 },
-        { "name": "Player 4", "points": 120 },
-        { "name": "Player 5", "points": 180 }
-    ],
-"userSelections": {}
+    "users": [
+        "user1",
+        "user2",
+        "user3"
     ],
     "leaderboard": [
-        { "name": "User 1", "points": 300 },
-        { "name": "User 2", "points": 250 },
-        { "name": "User 3", "points": 200 }
-    ]
+        {"name": "Player 1", "points": 100},
+        {"name": "Player 2", "points": 80},
+        {"name": "Player 3", "points": 60},
+        {"name": "Player 4", "points": 40},
+        {"name": "Player 5", "points": 20}
+    ],
+    "players": [
+        {"name": "Player 1", "points": 10},
+        {"name": "Player 2", "points": 15},
+        {"name": "Player 3", "points": 20},
+        {"name": "Player 4", "points": 25},
+        {"name": "Player 5", "points": 30}
+    ],
+    "selections": {
+        "user1": ["Player 1", "Player 2", "Player 3"],
+        "user2": [],
+        "user3": []
+    }
 }
