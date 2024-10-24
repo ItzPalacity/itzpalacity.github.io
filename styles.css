@@ -23,7 +23,6 @@ header {
 main {
     text-align: center; /* Center text in main */
     padding: 20px; /* Added padding for spacing */
-    margin-top: 70px; /* Ensure content does not overlap with the header */
 }
 
 #signupContainer {
