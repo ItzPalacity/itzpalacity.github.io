@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
+    <title>Leaderboard - Fantasy Racing</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="leaderboard.js" defer></script>
 </head>
 <body>
     <header>
@@ -16,7 +15,8 @@
         </nav>
     </header>
     <main>
-        <table id="leaderboard">
+        <h2>Current Standings</h2>
+        <table id="leaderboardTable">
             <thead>
                 <tr>
                     <th>Player</th>
@@ -24,9 +24,10 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Player rows will be dynamically added here -->
+                <!-- Dynamic content will be populated by leaderboard.js -->
             </tbody>
         </table>
     </main>
+    <script src="leaderboard.js"></script>
 </body>
 </html>
