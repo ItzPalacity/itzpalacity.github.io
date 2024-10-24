@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Fantasy League Racing</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Fantasy League Racing</h1>
+        <div id="usernameDisplay" style="float: right;"></div>
     </header>
     <main>
-        <div class="welcome-text">
-            <p>Welcome to Fantasy League Racing! Create your team and compete with others!</p>
-            <p>Pick your favorite players, and see how they perform in races. You can lock in your team for a week and watch the points roll in!</p>
+        <h2 style="text-align: center;">Welcome to Fantasy League Racing!</h2>
+        <p style="text-align: center;">Join us and pick your favorite players to form your team. Compete with others and climb the leaderboard!</p>
+        <div id="registerArea" style="text-align: center;">
+            <input type="text" id="usernameInput" placeholder="Enter your username" style="display:none; margin-right: 10px;">
+            <button id="registerButton" style="display:none;">Register</button>
         </div>
-        <div class="signup-container">
-            <button id="sign-up-btn">Sign Up</button>
-            <div id="register-container" style="display: none;">
-                <input type="text" id="username" placeholder="Enter your username" />
-                <button id="register-btn">Register</button>
-            </div>
-        </div>
-        <div id="user-display"></div>
+        <button id="signUpButton">Sign Up</button>
     </main>
-    <script src="script.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
