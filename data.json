@@ -1,7 +1,14 @@
 {
     "players": [
-        {"name": "Player 1", "points": 100},
-        {"name": "Player 2", "points": 200},
-        {"name": "Player 3", "points": 150}
+        { "name": "Player 1", "points": 100 },
+        { "name": "Player 2", "points": 150 },
+        { "name": "Player 3", "points": 200 },
+        { "name": "Player 4", "points": 120 },
+        { "name": "Player 5", "points": 180 }
+    ],
+    "leaderboard": [
+        { "name": "User 1", "points": 300 },
+        { "name": "User 2", "points": 250 },
+        { "name": "User 3", "points": 200 }
     ]
 }
