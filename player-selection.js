@@ -1,38 +1,43 @@
-// player-selection.js
+document.addEventListener("DOMContentLoaded", function() {
+    const playerSelectionArea = document.getElementById('player-selection-area');
+    const lockPlayersButton = document.getElementById('lock-players');
+    let selectedPlayers = [];
 
-fetch('data.json')
-  .then(response => response.json())
-  .then(data => {
-    const players = data.players;
-    const playerSelectionContainer = document.getElementById('player-selection');
-    
-    // Clear existing selection options
-    playerSelectionContainer.innerHTML = '';
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            data.players.forEach(player => {
+                const playerDiv = document.createElement('div');
+                const playerCheckbox = document.createElement('input');
+                playerCheckbox.type = 'checkbox';
+                playerCheckbox.value = player.name;
+                playerCheckbox.id = player.name;
 
-    // Create a dropdown for selecting players
-    const selectElement = document.createElement('select');
-    selectElement.multiple = true; // Allow multiple selections
-    playerSelectionContainer.appendChild(selectElement);
+                const playerLabel = document.createElement('label');
+                playerLabel.htmlFor = player.name;
+                playerLabel.textContent = player.name;
 
-    players.forEach(player => {
-      const option = document.createElement('option');
-      option.value = player;
-      option.textContent = player;
-      selectElement.appendChild(option);
+                playerDiv.appendChild(playerCheckbox);
+                playerDiv.appendChild(playerLabel);
+                playerSelectionArea.appendChild(playerDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching player data:', error));
+
+    lockPlayersButton.addEventListener('click', () => {
+        const checkboxes = playerSelectionArea.querySelectorAll('input[type="checkbox"]:checked');
+        if (checkboxes.length !== 3) {
+            alert('Please select exactly 3 players.');
+            return;
+        }
+        
+        selectedPlayers = Array.from(checkboxes).map(checkbox => checkbox.value);
+        alert('Players locked: ' + selectedPlayers.join(', '));
+
+        // Disable checkboxes after selection
+        checkboxes.forEach(checkbox => {
+            checkbox.disabled = true;
+        });
+        lockPlayersButton.disabled = true; // Disable the lock button
     });
-
-    const submitButton = document.createElement('button');
-    submitButton.textContent = 'Lock Selection';
-    playerSelectionContainer.appendChild(submitButton);
-
-    submitButton.addEventListener('click', () => {
-      const selectedPlayers = Array.from(selectElement.selectedOptions).map(option => option.value);
-      if (selectedPlayers.length === 3) {
-        alert(`You have locked in: ${selectedPlayers.join(', ')}`);
-        // Logic to store locked players can be added here
-      } else {
-        alert('Please select exactly 3 players.');
-      }
-    });
-  })
-  .catch(error => console.error('Error loading data:', error));
+});
