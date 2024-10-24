@@ -24,13 +24,12 @@ h1 {
 
 main {
     padding: 20px;
-    text-align: center;
 }
 
 table {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
-    margin: 20px auto; /* Centering the table */
+    margin: 20px auto;
 }
 
 table, th, td {
@@ -40,4 +39,14 @@ table, th, td {
 th, td {
     padding: 10px;
     text-align: left;
+}
+
+#playerOptions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.player {
+    margin: 10px;
 }
