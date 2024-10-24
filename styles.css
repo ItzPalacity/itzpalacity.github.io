@@ -11,6 +11,8 @@ header {
 
 #signupContainer {
     margin: 20px auto; /* Center the signup button */
+    display: flex;
+    justify-content: center; /* Center elements in this container */
 }
 
 #signupButton {
@@ -44,7 +46,6 @@ header {
 
 button {
     margin-top: 10px;
-    padding: 10px 20px;
 }
 
 #playerSelectionContainer {
