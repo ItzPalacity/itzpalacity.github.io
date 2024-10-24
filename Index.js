@@ -6,6 +6,13 @@ const usernameInput = document.getElementById('username-input');
 const usernameDisplay = document.getElementById('username-display');
 const registrationError = document.getElementById('registration-error');
 
+// Display the logged-in user's username if exists
+const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
+const currentUser = Object.keys(registeredUsers).find(user => registeredUsers[user]);
+if (currentUser) {
+    usernameDisplay.innerText = currentUser;
+}
+
 signUpButton.onclick = function() {
     modal.style.display = 'block';
 }
@@ -23,7 +30,6 @@ window.onclick = function(event) {
 registerButton.onclick = function() {
     const username = usernameInput.value.trim();
     if (username) {
-        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
         if (!registeredUsers[username]) {
             registeredUsers[username] = { players: [] };
             localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
