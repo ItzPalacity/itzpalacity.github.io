@@ -1,13 +1,34 @@
 {
-  "leaderboard": [
-    { "name": "Marc_Q", "points": 100 },
-    { "name": "Player 2", "points": 150 },
-    { "name": "Player 3", "points": 120 }
-  ],
-  "players": [
-    "Marc_Q",
-    "Player 2",
-    "Player 3",
-    "Player 4"
-  ]
+    "players": [
+        {
+            "name": "Player 1",
+            "points": 100,
+            "selected": false
+        },
+        {
+            "name": "Player 2",
+            "points": 150,
+            "selected": false
+        },
+        {
+            "name": "Player 3",
+            "points": 200,
+            "selected": false
+        },
+        {
+            "name": "Player 4",
+            "points": 120,
+            "selected": false
+        },
+        {
+            "name": "Player 5",
+            "points": 90,
+            "selected": false
+        }
+    ],
+    "selections": {
+        "user1": [],
+        "user2": [],
+        "user3": []
+    }
 }
