@@ -19,5 +19,3 @@ fetch('data.json')
     const leaderboard = data.leaderboard;
     // Code to update leaderboard UI goes here
   });
-
-});
