@@ -1,5 +1,9 @@
 const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
 
+document.getElementById('sign-up-btn').addEventListener('click', function() {
+    document.getElementById('register-container').style.display = 'block';
+});
+
 document.getElementById('register-btn').addEventListener('click', function() {
     const usernameInput = document.getElementById('username').value.trim();
     
@@ -9,6 +13,7 @@ document.getElementById('register-btn').addEventListener('click', function() {
         displayUser(usernameInput);
         alert('Registration successful!');
         document.getElementById('username').value = '';
+        document.getElementById('register-container').style.display = 'none'; // Hide the input after registration
     } else if (registeredUsers[usernameInput]) {
         alert('Username already taken. Please choose another.');
     } else {
