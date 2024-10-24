@@ -22,27 +22,15 @@ h1 {
     margin: 20px 0;
 }
 
-h2 {
-    text-align: center; /* Center-align the title */
-    color: #333; /* Set color for the title */
-    margin-bottom: 10px; /* Add some space below the title */
-}
-
 main {
     padding: 20px;
-    display: flex; /* Use flexbox for centering */
-    justify-content: center; /* Center horizontally */
-}
-
-#leaderboard-container {
-    width: 80%; /* Set a width for the container */
-    max-width: 800px; /* Set a max width for larger screens */
+    text-align: center;
 }
 
 table {
-    width: 100%; /* Table takes the full width of the container */
+    width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 20px auto; /* Centering the table */
 }
 
 table, th, td {
@@ -52,12 +40,4 @@ table, th, td {
 th, td {
     padding: 10px;
     text-align: left;
-}
-
-th {
-    background-color: #f2f2f2; /* Add background color for header cells */
-}
-
-tr:hover {
-    background-color: #eaeaea; /* Highlight row on hover */
 }
