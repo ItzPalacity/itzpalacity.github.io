@@ -12,4 +12,12 @@ players.forEach(player => {
     const row = document.createElement("tr");
     row.innerHTML = `<td>${player.name}</td><td>${player.points}</td>`;
     leaderboardBody.appendChild(row);
+
+fetch('data.json')
+  .then(response => response.json())
+  .then(data => {
+    const leaderboard = data.leaderboard;
+    // Code to update leaderboard UI goes here
+  });
+
 });
