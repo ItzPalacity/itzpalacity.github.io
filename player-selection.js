@@ -39,17 +39,13 @@ function lockInPlayers() {
 
     console.log('Locked in players:', selectedPlayers);
 
-    // Disable all checkboxes and the button
-    checkboxes.forEach(checkbox => {
-        checkbox.disabled = true; // Disable selected checkboxes
-    });
-
-    // Disable all unchecked checkboxes
+    // Disable all checkboxes
     const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     allCheckboxes.forEach(checkbox => {
         checkbox.disabled = true; // Disable all checkboxes
     });
 
+    // Disable the lock-in button
     document.getElementById('lock-in-players').disabled = true;
 
     // Display confirmation message
