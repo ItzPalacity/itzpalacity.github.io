@@ -9,18 +9,25 @@
 </head>
 <body>
     <header>
-        <h1>Select Your Players</h1>
+        <h1>Player Selection</h1>
         <nav>
             <a href="index.html">Home</a>
             <a href="leaderboard.html">Leaderboard</a>
         </nav>
     </header>
     <main>
-        <h2>Choose 3 Players:</h2>
+        <h2>Select Your Players</h2>
         <div id="player-selection-area">
-            <!-- Player selection UI will be dynamically generated here -->
+            <h3>Available Players</h3>
+            <ul id="player-list">
+                <!-- Player options will be populated here -->
+            </ul>
+            <button id="lock-players">Lock Players</button>
+            <h3>Your Selected Players</h3>
+            <ul id="selected-players">
+                <!-- Selected players will be listed here -->
+            </ul>
         </div>
-        <button id="lock-players">Lock Players</button>
     </main>
 </body>
 </html>
