@@ -2,7 +2,6 @@ const playerOptionsDiv = document.getElementById('playerOptions');
 const playerSelectionForm = document.getElementById('playerSelectionForm');
 const message = document.getElementById('message');
 
-// Function to fetch player data
 async function fetchPlayers() {
     try {
         const response = await fetch('data.json');
@@ -16,7 +15,6 @@ async function fetchPlayers() {
     }
 }
 
-// Function to populate player selection options
 async function populatePlayerOptions() {
     const players = await fetchPlayers();
     if (players && players.length) {
@@ -46,5 +44,4 @@ playerSelectionForm.addEventListener('submit', function(e) {
     // Here you would typically save the selections
 });
 
-// Initial call to populate player options
 populatePlayerOptions();
