@@ -18,7 +18,7 @@ closeModal.onclick = function() {
 
 // Register username
 registerButton.onclick = function() {
-    const username = usernameInput.value;
+    const username = usernameInput.value.trim(); // Trim whitespace
     if (username) {
         localStorage.setItem('username', username);
         usernameDisplay.innerText = username;
@@ -28,6 +28,8 @@ registerButton.onclick = function() {
         signUpButton.style.display = "none"; // Hide sign-up button after registration
         // Redirect to player selection after registration
         window.location.href = 'player-selection.html';
+    } else {
+        alert("Please enter a valid username."); // Alert if the input is empty
     }
 };
 
