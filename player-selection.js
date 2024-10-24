@@ -53,3 +53,5 @@ function lockInPlayers() {
 // Initialize the available players on page load
 displayAvailablePlayers();
 document.getElementById('lock-in-players').addEventListener('click', lockInPlayers);
+
+}
