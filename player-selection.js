@@ -1,77 +1,47 @@
-const players = [
-    { name: "Player 1", points: 10 },
-    { name: "Player 2", points: 20 },
-    { name: "Player 3", points: 30 },
-    { name: "Player 4", points: 40 },
-    { name: "Player 5", points: 50 }
-];
+const playerList = document.getElementById('player-list');
+const lockInPlayersButton = document.getElementById('lock-in-players');
+const confirmationMessage = document.getElementById('confirmation-message');
+const errorMessage = document.getElementById('error-message');
+const usernameDisplay = document.getElementById('username-display');
 
 let selectedPlayers = [];
-const registeredUser = localStorage.getItem('registeredUser');
+let currentUsername = usernameDisplay.innerText;
 
-document.addEventListener('DOMContentLoaded', function() {
-    if (registeredUser) {
-        loadAvailablePlayers();
-    } else {
-        document.getElementById('available-players').innerText = 'Please register to select players.';
-        document.getElementById('lock-in-players').disabled = true;
-    }
-});
-
-function loadAvailablePlayers() {
-    const playerList = document.getElementById('available-players');
-    players.forEach(player => {
-        const label = document.createElement('label');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.value = player.name;
-        checkbox.className = 'player-checkbox';
-        checkbox.onchange = handlePlayerSelection;
-        
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(player.name));
-        playerList.appendChild(label);
-        playerList.appendChild(document.createElement('br'));
-    });
-
-    const savedSelection = JSON.parse(localStorage.getItem(`selectedPlayers_${registeredUser}`));
-    if (savedSelection) {
-        selectedPlayers = savedSelection;
-        disableSelectedPlayers();
-        document.getElementById('message').innerText = "Thank you for picking! You can come transfer in a week.";
-    }
-}
-
-function handlePlayerSelection(event) {
-    const selectedCheckboxes = document.querySelectorAll('.player-checkbox:checked');
-    
-    if (selectedCheckboxes.length > 3) {
-        event.target.checked = false; // Uncheck the current checkbox
+if (currentUsername) {
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
+    const userData = registeredUsers[currentUsername];
+    if (userData && userData.players.length > 0) {
+        confirmationMessage.innerText = `You have already selected: ${userData.players.join(', ')}`;
+        lockInPlayersButton.disabled = true;
         return;
     }
-
-    selectedPlayers = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
-    
-    if (selectedPlayers.length === 3) {
-        document.getElementById('lock-in-players').disabled = false;
-    } else {
-        document.getElementById('lock-in-players').disabled = true;
-    }
+} else {
+    errorMessage.innerText = 'You must be registered to select players.';
+    lockInPlayersButton.disabled = true;
 }
 
-document.getElementById('lock-in-players').onclick = function() {
-    localStorage.setItem(`selectedPlayers_${registeredUser}`, JSON.stringify(selectedPlayers));
-    disableSelectedPlayers();
-    document.getElementById('message').innerText = "Thank you for picking! You can come transfer in a week.";
-    this.disabled = true;
-};
-
-function disableSelectedPlayers() {
-    const checkboxes = document.querySelectorAll('.player-checkbox');
-    checkboxes.forEach(checkbox => {
-        checkbox.disabled = true;
-        if (selectedPlayers.includes(checkbox.value)) {
-            checkbox.checked = true;
-        }
+fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+        data.players.forEach(player => {
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" class="player-checkbox" value="${player.name}"> ${player.name}`;
+            playerList.appendChild(label);
+        });
     });
+
+lockInPlayersButton.onclick = function() {
+    const checkboxes = document.querySelectorAll('.player-checkbox:checked');
+    if (checkboxes.length === 3) {
+        checkboxes.forEach(checkbox => selectedPlayers.push(checkbox.value));
+        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers'));
+        registeredUsers[currentUsername].players = selectedPlayers;
+        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+        confirmationMessage.innerText = 'Thank you for picking! You can come transfer in a week.';
+        lockInPlayersButton.disabled = true;
+        playerList.style.display = 'none';
+    } else {
+        errorMessage.innerText = 'Please select exactly 3 players.';
+    }
 }
