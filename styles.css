@@ -26,27 +26,19 @@ main {
     padding: 20px;
 }
 
-table {
-    width: 80%;
-    border-collapse: collapse;
-    margin: 20px auto;
+.player-list {
+    margin: 20px 0;
 }
 
-table, th, td {
-    border: 1px solid black;
+.player-list div {
+    margin: 5px 0; /* Space between players */
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+button {
+    margin-top: 10px;
 }
 
-#playerOptions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.player {
-    margin: 10px;
+#message {
+    margin-top: 20px;
+    color: green; /* Adjust color to your liking */
 }
