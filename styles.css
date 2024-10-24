@@ -16,11 +16,14 @@ header {
     padding: 10px 20px; /* Added padding for better appearance */
     width: 100%; /* Full width for header */
     text-align: center; /* Center text in header */
+    position: absolute; /* Position absolute to allow center alignment */
+    top: 0; /* Align header to the top */
 }
 
 main {
     text-align: center; /* Center text in main */
     padding: 20px; /* Added padding for spacing */
+    margin-top: 70px; /* Ensure content does not overlap with the header */
 }
 
 #signupContainer {
