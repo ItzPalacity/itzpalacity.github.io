@@ -3,7 +3,7 @@ const logoutButton = document.getElementById('logoutButton');
 
 // Load the logged-in user on page load
 window.onload = () => {
-    const loggedInUser = localStorage.getItem('loggedInUser');
+    const loggedInUser = localStorage.getItem('username'); // Adjusted to use 'username'
     if (loggedInUser) {
         usernameDisplay.innerText = `Logged in as: ${loggedInUser}`;
         logoutButton.style.display = 'inline'; // Show the logout button
@@ -15,7 +15,7 @@ window.onload = () => {
 };
 
 logoutButton.addEventListener('click', () => {
-    localStorage.removeItem('loggedInUser'); // Remove user from local storage
+    localStorage.removeItem('username'); // Remove user from local storage
     location.reload(); // Refresh page
 });
 
