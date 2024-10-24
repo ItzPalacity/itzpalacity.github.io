@@ -1,37 +1,38 @@
-// Player data - could be dynamic
-const players = ["Racer 1", "Racer 2", "Racer 3", "Racer 4", "Racer 5"];
-
-const playerSelectors = [
-    document.getElementById("player1"),
-    document.getElementById("player2"),
-    document.getElementById("player3")
-];
-
-// Populate select boxes with player options
-playerSelectors.forEach(select => {
-    players.forEach(player => {
-        const option = document.createElement("option");
-        option.value = player;
-        option.textContent = player;
-        select.appendChild(option);
-    });
-});
-
-document.getElementById("player-selection-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    
-    const selectedPlayers = {
-        player1: document.getElementById("player1").value,
-        player2: document.getElementById("player2").value,
-        player3: document.getElementById("player3").value
-    };
-
-    localStorage.setItem("selectedPlayers", JSON.stringify(selectedPlayers));
-    alert("Your players are locked in for the week!");
+// player-selection.js
 
 fetch('data.json')
   .then(response => response.json())
   .then(data => {
     const players = data.players;
-    // Code to populate player selection UI goes here
-  });
+    const playerSelectionContainer = document.getElementById('player-selection');
+    
+    // Clear existing selection options
+    playerSelectionContainer.innerHTML = '';
+
+    // Create a dropdown for selecting players
+    const selectElement = document.createElement('select');
+    selectElement.multiple = true; // Allow multiple selections
+    playerSelectionContainer.appendChild(selectElement);
+
+    players.forEach(player => {
+      const option = document.createElement('option');
+      option.value = player;
+      option.textContent = player;
+      selectElement.appendChild(option);
+    });
+
+    const submitButton = document.createElement('button');
+    submitButton.textContent = 'Lock Selection';
+    playerSelectionContainer.appendChild(submitButton);
+
+    submitButton.addEventListener('click', () => {
+      const selectedPlayers = Array.from(selectElement.selectedOptions).map(option => option.value);
+      if (selectedPlayers.length === 3) {
+        alert(`You have locked in: ${selectedPlayers.join(', ')}`);
+        // Logic to store locked players can be added here
+      } else {
+        alert('Please select exactly 3 players.');
+      }
+    });
+  })
+  .catch(error => console.error('Error loading data:', error));
