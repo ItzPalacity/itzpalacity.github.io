@@ -20,10 +20,9 @@ h1, h2 {
     padding: 20px;
 }
 
-input[type="text"] {
-    padding: 10px;
-    width: 200px;
-    margin: 10px;
+.signup-container {
+    text-align: center;
+    margin: 20px;
 }
 
 button {
@@ -32,10 +31,17 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
     background-color: #555;
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 200px;
+    margin: 10px;
 }
 
 .welcome-text {
@@ -43,22 +49,7 @@ button:hover {
     margin: 20px;
 }
 
-.register-container {
-    text-align: center;
+#user-display {
+    text-align: right;
     margin: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-table, th, td {
-    border: 1px solid black;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
 }
