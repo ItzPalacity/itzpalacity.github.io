@@ -28,4 +28,10 @@ document.getElementById("player-selection-form").addEventListener("submit", func
 
     localStorage.setItem("selectedPlayers", JSON.stringify(selectedPlayers));
     alert("Your players are locked in for the week!");
-});
+
+fetch('data.json')
+  .then(response => response.json())
+  .then(data => {
+    const players = data.players;
+    // Code to populate player selection UI goes here
+  });
