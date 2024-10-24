@@ -1,11 +1,11 @@
 {
   "leaderboard": [
-    { "name": "Player 1", "points": 100 },
+    { "name": "Marc_Q", "points": 0 },
     { "name": "Player 2", "points": 80 },
     { "name": "Player 3", "points": 75 }
   ],
   "players": [
-    "Player 1",
+    "Marc_Q",
     "Player 2",
     "Player 3",
     "Player 4"
