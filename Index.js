@@ -1,53 +1,60 @@
 const signUpButton = document.getElementById('signUpButton');
-const registerModal = document.getElementById('registerModal');
-const closeModal = document.getElementsByClassName('close')[0];
-const registerButton = document.getElementById('registerButton');
+const registerArea = document.getElementById('registerArea');
 const usernameInput = document.getElementById('usernameInput');
+const registerButton = document.getElementById('registerButton');
 const usernameDisplay = document.getElementById('usernameDisplay');
-const logoutButton = document.getElementById('logoutButton');
 
-// Open modal on sign-up button click
-signUpButton.onclick = function() {
-    registerModal.style.display = "block";
-};
+let registeredUsers = [];
 
-// Close modal
-closeModal.onclick = function() {
-    registerModal.style.display = "none";
-};
+// Load existing usernames from the database
+fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+        registeredUsers = data.users || [];
+    });
 
-// Register username
-registerButton.onclick = function() {
-    const username = usernameInput.value.trim(); // Trim whitespace
-    if (username) {
-        localStorage.setItem('username', username);
-        usernameDisplay.innerText = username;
-        usernameDisplay.style.display = 'block';
-        logoutButton.style.display = 'inline';
-        registerModal.style.display = "none";
-        signUpButton.style.display = "none"; // Hide sign-up button after registration
-        // Redirect to player selection after registration
-        window.location.href = 'player-selection.html';
+signUpButton.addEventListener('click', () => {
+    registerArea.style.display = 'block';
+    usernameInput.style.display = 'inline';
+    registerButton.style.display = 'inline';
+    signUpButton.style.display = 'none';
+});
+
+registerButton.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+    if (username && !registeredUsers.includes(username)) {
+        registeredUsers.push(username);
+        localStorage.setItem('loggedInUser', username); // Save logged in user in local storage
+        updateUsernameDisplay(username);
+        updateUserDatabase();
+        location.reload(); // Refresh page to show buttons
     } else {
-        alert("Please enter a valid username."); // Alert if the input is empty
+        alert('Invalid username or already taken.');
+    }
+});
+
+function updateUsernameDisplay(username) {
+    usernameDisplay.innerText = `Logged in as: ${username}`;
+}
+
+// Load the logged-in user on page load
+window.onload = () => {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+        updateUsernameDisplay(loggedInUser);
+        registerArea.style.display = 'none'; // Hide register area after logging in
+        signUpButton.style.display = 'none'; // Hide the sign up button
     }
 };
 
-// Logout functionality
-logoutButton.onclick = function() {
-    localStorage.removeItem('username');
-    usernameDisplay.innerText = '';
-    logoutButton.style.display = 'none';
-    signUpButton.style.display = "inline"; // Show sign-up button again
-    window.location.href = 'index.html'; // Redirect to homepage
-};
-
-// Load username on page load
-window.onload = function() {
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername) {
-        usernameDisplay.innerText = storedUsername;
-        logoutButton.style.display = 'inline';
-        signUpButton.style.display = "none"; // Hide sign-up button if logged in
-    }
-};
+// Update data.json to save registered users
+function updateUserDatabase() {
+    const data = { users: registeredUsers };
+    fetch('data.json', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+}
