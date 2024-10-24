@@ -1,55 +1,43 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    text-align: center; /* Center text */
 }
 
 header {
-    background-color: #333;
+    background-color: #4CAF50;
     color: white;
-    padding: 15px;
-    text-align: center;
+    padding: 10px 0;
 }
 
-h1, h2 {
-    margin: 20px 0;
+#signupContainer {
+    margin: 20px auto; /* Center the signup button */
 }
 
-.main {
-    padding: 20px;
-}
-
-.signup-container {
-    text-align: center;
-    margin: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #333;
+#signupButton {
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #4CAF50;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+}
+
+#signupButton:hover {
+    background-color: #45a049;
+}
+
+#registration {
+    margin-top: 20px;
+}
+
+#usernameInput {
+    margin-top: 10px;
+    padding: 10px;
     font-size: 16px;
 }
 
-button:hover {
-    background-color: #555;
-}
-
-input[type="text"] {
-    padding: 10px;
-    width: 200px;
-    margin: 10px;
-}
-
-.welcome-text {
-    text-align: center;
-    margin: 20px;
-}
-
-#user-display {
-    text-align: right;
-    margin: 20px;
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
 }
