@@ -41,3 +41,27 @@ button {
     margin-top: 10px;
     padding: 10px 20px;
 }
+
+#playerSelectionContainer {
+    margin: 20px auto;
+}
+
+#playerForm {
+    display: flex;
+    flex-direction: column; /* Stack players vertically */
+}
+
+#leaderboardTable {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 50%; /* Adjust table width */
+}
+
+#leaderboardTable, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
