@@ -1,18 +1,24 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center; /* Center text */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align items horizontally */
+    height: 100vh; /* Full height of the viewport */
+    justify-content: center; /* Center vertically */
 }
 
 header {
     background-color: #4CAF50;
     color: white;
     padding: 10px 0;
+    width: 100%; /* Full width for header */
 }
 
 #signupContainer {
     margin: 20px auto; /* Center the signup button */
-    display: flex;
-    justify-content: center; /* Center elements in this container */
 }
 
 #signupButton {
@@ -46,28 +52,4 @@ header {
 
 button {
     margin-top: 10px;
-}
-
-#playerSelectionContainer {
-    margin: 20px auto;
-}
-
-#playerForm {
-    display: flex;
-    flex-direction: column; /* Stack players vertically */
-}
-
-#leaderboardTable {
-    margin: 20px auto;
-    border-collapse: collapse;
-    width: 50%; /* Adjust table width */
-}
-
-#leaderboardTable, th, td {
-    border: 1px solid black;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
 }
