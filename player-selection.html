@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Selection</title>
+    <title>Player Selection - Fantasy Racing</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="player-selection.js" defer></script>
 </head>
 <body>
     <header>
@@ -17,17 +16,12 @@
     </header>
     <main>
         <h2>Select Your Players</h2>
-        <div id="player-selection-area">
-            <h3>Available Players</h3>
-            <ul id="player-list">
-                <!-- Player options will be populated here -->
-            </ul>
-            <button id="lock-players">Lock Players</button>
-            <h3>Your Selected Players</h3>
-            <ul id="selected-players">
-                <!-- Selected players will be listed here -->
-            </ul>
-        </div>
+        <form id="playerSelectionForm">
+            <div id="playerOptions"></div>
+            <button type="submit">Lock in Players</button>
+        </form>
+        <p id="message"></p>
     </main>
+    <script src="player-selection.js"></script>
 </body>
 </html>
